@@ -1,0 +1,153 @@
+<!--
+ * @Author: your name
+ * @Date: 2020-12-30 17:09:46
+ * @LastEditTime: 2020-12-30 19:44:35
+ * @LastEditors: Please set LastEditors
+ * @Description: In User Settings Edit
+ * @FilePath: \demo\html\3.响应式属性.html
+-->
+<!--
+ * @Author: your name
+ * @Date: 2020-12-30 11:35:32
+ * @LastEditTime: 2020-12-30 17:08:09
+ * @LastEditors: Please set LastEditors
+ * @Description: In User Settings Edit
+ * @FilePath: \demo\html\1.vue的使用.html
+-->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>数据挂载</title>
+    <script src="../js/vue.js"></script>
+</head>
+<body>
+    <h1>vue的使用</h1>
+    <!-- view视图层 -->
+    <div id="app">
+        <!-- 
+            响应式属性??????????
+                答案:数据的改变会更新视图层
+                响应式属性在对象的属性里面有一个新的东西叫getter/setter
+                ??????getter/setter
+                    属性特性，这个属性特性里面有
+                        存储器属性其中就包括
+                            configurable 可配置性
+                            enumerable  可枚举性
+                            getter 监听属性的读取
+                            setter 监听属性的修改
+                值属性
+                     configurable 可配置性
+                    enumerable  可枚举性
+                    writable 可写性
+                    value 值
+
+                一个普通的属性这么变成响应式属性?????
+                传统方式设置的属性，默认属性特性为true;
+                通过object.defineProperty()设置的属性，默认属性特性为false
+        
+        -->
+        <p>用户名：{{username}}</p>
+        <input type="text" v-model="username">
+       </div>
+       <div id="myapp">
+       </div>
+
+    <script  >
+      let vm = new Vue({
+            //关联视图层
+            el:'#app',
+            //关联数据层
+            data:{
+            username:'lisa',
+            age:32
+        },
+            methods:{
+                changeAge(e){
+                    console.log(e);
+                   
+                   this.age=e.taret.value;
+                 
+                }
+            }
+        });
+    //      一个普通的属性这么变成响应式属性?????
+    /*
+    普通对象的属性,你更改属性时,不能更改视图
+    因为这种属性在对象里面叫做属性特性
+    要在数据被修改时更新视图,必须能监听到数据被修改的操作
+    就要用到属性特性
+        getter 监听属性的读取
+        setter 监听属性的修改
+        
+    */
+    let myData = {
+        username:'lisa',
+        passwrold:123456,
+        role:'admin',
+        //监听age属性的读取操作,当age属性被读取时,执行这个函数
+        // get age(){
+
+        //     //可以在里面操作自己要操作的数据
+        //     console.log('读取age属性')
+        //     return 18;
+        // },
+        // //监听属性的修改操作,当age属性被修改时,执行这个函数
+        // set age(newValue){
+        //     console.log('修改操作',newValue)
+        //     //更新视图
+        //     myapp.innerText=myData.newValue;
+        // }
+    }
+        //  myapp.innerText=myData.age;
+
+
+        //如果没有以上的get 和set方法就用遍历来实现
+       // 要在数据被修改时更新视图,必须能监听到数据被修改的操作,遍历data属性时,是用
+       //object.defineProperty()这个方法去改的.
+       //遍历data数据,把数据变成getter和setter
+       let responsive={};
+       for(let key in myData){
+           //Object.defineProperty(target,key,descriptor) 
+           //第三个属性叫属性特性
+           //target:目标对象
+           //key:属性名
+           Object.defineProperty(responsive,key,{
+               configurable:true,
+               enumerable:true,
+               get(){
+                   return myData[key];
+                   
+               },
+               set(newValue){
+                   myData[key]=newValue;
+                   render();
+               }
+           })
+       }
+       render();
+       responsive.username;
+       responsive.passwrold='lis123';
+       function render(){
+           myapp.innerText='用户名：'+myData.username+',密码'+myData.passwrold;
+       }
+    /*
+       值属性的案例
+    */
+   // myData.id='10086';原生写法，也可以用下面这种写法,
+   Object.defineProperty(myData,'id',{
+       configurable:true,//总开关，用于设置其他属性特性
+       enumerable:true,
+       writable:true,
+       value:10086
+   })
+// 修改usernaem为不可枚举
+Object.defineProperty(myData,'username',{
+    enumerable:false
+})
+    </script>
+</body>
+</html>
+

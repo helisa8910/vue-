@@ -1,0 +1,81 @@
+<!--
+ * @Author: your name
+ * @Date: 2020-12-30 11:35:32
+ * @LastEditTime: 2020-12-30 17:08:09
+ * @LastEditors: Please set LastEditors
+ * @Description: In User Settings Edit
+ * @FilePath: \demo\html\1.vue的使用.html
+-->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>数据挂载</title>
+    <script src="../js/vue.js"></script>
+</head>
+<body>
+    <h1>vue的使用</h1>
+    <!-- view视图层 -->
+    <div id="app">
+        <!-- 能挂载视图层中的数据,一定是vue实例的属性
+        这种操作就叫数据挂载,把数据挂载到视图层上面.
+        为什么这些数据会成为vm的实例属性呢?????
+        为什么data数据会出现在vm实例的属性中
+            答案:在Vue实例化时,会遍历data中的所有属性,把它们变成响应式属性并写入Vue的实例
+                这种数据我们称为响应式属性
+            响应式属性??????????
+                答案:数据的改变会更新视图层
+                响应式属性在对象的属性里面有一个新的东西叫getter/setter
+                ??????getter/setter
+                一个普通的属性这么变成响应式属性?????
+        
+        -->
+        
+       
+      <p>用户名：{{username}}</p>
+     
+      
+       <input type="text" v-model="username">
+        
+        <input type="text" v-bind:value="age" v-on:input="changeAge">
+    </div>
+    
+    <script  >
+        //let vm = new Vue(里面就是一个参数)
+        let vm = new Vue({
+           
+            el:'#app',
+           
+            data:{
+            username:'lisa',
+            age:32
+        },
+            methods:{
+               
+                changeAge(e){
+                 
+                   this.age=e.taret.value;
+                  
+                }
+            }
+        });
+        //vm.username//lisa
+        //vm.changeAge//
+
+
+    //      一个普通的属性这么变成响应式属性?????
+    /*
+    普通对象的属性,你更改属性时,不能更改视图
+    因为这种属性在对象里面叫做属性特性
+    */
+    let myData = {
+        username:'lisa',
+        passwrold:123456,
+        role:'admin'
+    }
+    </script>
+</body>
+</html>
+

@@ -1,0 +1,86 @@
+<!--
+ * @Author: your name
+ * @Date: 2020-12-30 11:35:32
+ * @LastEditTime: 2020-12-30 16:47:53
+ * @LastEditors: Please set LastEditors
+ * @Description: In User Settings Edit
+ * @FilePath: \demo\html\1.vue的使用.html
+-->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>vue的使用</title>
+    <script src="../js/vue.js"></script>
+</head>
+<body>
+    <h1>vue的使用</h1>
+    <!-- view视图层 -->
+    <div id="app">
+        <!-- 能写在视图层中的数据,一定是vue实例的属性
+        这种操作就叫数据挂载,把数据挂载到视图层上面.
+        为什么这些数据会成为vm的实例属性呢?????
+        -->
+        <!-- 在视图层实现数据绑定
+            单向绑定
+         -->
+       
+      <p>用户名：{{username}}</p>
+     
+      <!-- 这个是属性绑定 v-bind:value="数据"
+        格式:v-bind:attr="";
+    -->
+      <!-- <input type="text" v-bind:value="username"> -->
+      <!-- /////////////////////////////////////////////////////////////// -->
+     
+
+      <!-- 
+          双向绑定，数据层 ===》视图层
+          视图层===》数据层
+          指令:html的自定义属性
+          v-model
+       -->
+       <input type="text" v-model="username">
+        <!-- 
+          v-model也可以用v-on来实现
+         <input type="text" v-bind:value="username" v-on:input="事件处理函数"> 
+        -->
+        <input type="text" v-bind:value="age" v-on:input="changeAge">
+    </div>
+    
+    <script  >
+        //vue的使用
+        /*
+            model
+           数据层 
+        */
+        let data = {
+            username:'lisa',
+            age:32
+        }
+        //viewModel控制层，所有的层都是靠这个  let vm = new Vue();
+        //实例来控制的。
+         /*
+        这三个层是独立的，所以要用控制层来关联vm
+        */
+        let vm = new Vue({
+            //关联视图层
+            el:'#app',
+            //关联数据层
+            data:data,
+            methods:{
+                //用来编写事件处理函数和工具函数的
+                changeAge(e){
+                    console.log(e);
+                   // data.age=e.target.value;
+                   this.age=e.taret.value;
+                   //this指向vm实例
+                }
+            }
+        });
+       
+    </script>
+</body>
+</html>

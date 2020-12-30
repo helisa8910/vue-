@@ -1,0 +1,98 @@
+<!--
+ * @Author: your name
+ * @Date: 2020-12-30 19:48:48
+ * @LastEditTime: 2020-12-30 20:44:40
+ * @LastEditors: Please set LastEditors
+ * @Description: In User Settings Edit
+ * @FilePath: \demo\html\4.tab标签切换.html
+-->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>tab切换</title>
+    <script src="../js/vue.js"></script>
+    <style>
+        .tab .title{border-bottom:2px solid #ccc;overflow: hidden;}
+        .tab .title span{float: left;padding:0 15px;height:50px;line-height: 50px;border:1px solid #efefef;border-bottom:none;}
+        .tab .title span.active{border:1px solid #ccc;background-color:#ffc}
+        .tab .content{border:1px solid #ddd;padding:15px}
+    </style>
+</head>
+<body>
+    <!-- <h4>tab标签切换</h4>
+    <div id="app">
+        <div class="tab">
+            <div class="title">
+                <span>lisa</span>
+                <span>haha</span>
+                <span>jiajia</span>
+            </div>
+            <div class="content">
+                <div>lisa喜欢1</div>
+                <div>hehe2</div>
+                <div>jiajia3</div>
+            </div>
+        </div>
+    </div> -->
+    <!-- 以上是把数据给写死的，但是我们现在是要靠数据去生成结构
+        要遍历数据
+        用指令 v-for,用指令的里面都是变量，。遍历
+        idx===currentIndex
+        v-show 是否显示 显示与隐藏如有频繁的显示隐藏操作，建议使用这个
+        v-if 实现显示，（创建与删除，）
+        
+        v-on绑定事件
+            事件传参
+     -->
+  <div id="app">
+    {{}}： <span>{{tabs[2].name}}</span><br>
+        v-text: <span v-text="tabs[2].name"></span><br>
+        v-html:  <span v-html="tabs[2].name"></span>
+        <div class="tab">
+            <div class="title">
+                <span v-for="(item,idx) in tabs" v-bind:class="{active:idx===currentIndex,'tab-item':true}" v-on:click="changeTab(idx)">{{item.name}}</span>
+            </div>
+            <div class="content">
+                <div v-for="(item,idx) in tabs" v-show="idx===currentIndex">{{item.name + item.hobby}}</div>
+            </div>
+        </div>
+    </div> 
+    <script>
+        /*
+            tab标签切换
+        */
+
+
+      const vm=  new Vue({
+            el:'#app',
+            data:{
+                tabs:[{
+                    name:'lisa',
+                    hobby:'游泳'
+                },
+                {
+                    name:'hehe',
+                    hobby:'游泳3'
+                },
+                { 
+                    name:'jiajia',
+                    hobby:'游泳4'
+                    },
+                   
+                ],
+                currentIndex:0,
+            },
+            
+            methods:{
+                changeTab:function(idx){
+                    this.currentIndex=idx;
+                }
+            }
+            
+        });
+    </script>
+</body>
+</html>
